@@ -12,9 +12,6 @@ csv <- "data/syR.csv"
 # Create data folder
 dir.create(file.path('data'), showWarnings=FALSE, recursive=TRUE)
 
-# Output one line of data with a timestamp.
-timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-
 #install.packages("XML")
 library(XML)
 
@@ -47,8 +44,8 @@ for (i in c("commercial_vehicle_lanes",
     }
 }
 
-# Combine vectors
-loc.v <- c(timestamp, loc.top.v, loc.children.v)
+# Combine vectors with a timestamp
+loc.v <- c(format(Sys.time(), "%Y-%m-%d %H:%M:%S"), loc.top.v, loc.children.v)
 
 # Remove values of "character(0)"
 loc.v <- gsub("character(0)", "", loc.v, fixed = TRUE)
