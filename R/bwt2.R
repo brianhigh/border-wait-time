@@ -20,7 +20,7 @@ dat <- readHTMLTable(url, trim=TRUE, header=FALSE, which=5,
                        data.frame=TRUE, stringsAsFactors=FALSE)[3,]
 
 # Separate the concatenated fields. Note: Empty fields may still be missing.
-dat <- gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", dat)
+dat <- gsub("(ay|T)(no|\\d)", "\\1,\\2", dat)
 
 # Remove extra text
 dat <- gsub(" lane\\(s\\) open| min delay", "", dat)
