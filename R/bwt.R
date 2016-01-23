@@ -34,10 +34,7 @@ loc.ns <- ns[[grep(loc, ports)]]
 #[1] "25At 1:00 pm PSTdelay6010At 1:00 pm PSTdelay108At 1:00 pm PSTdelay407"
 
 # Store top-level node attributues as a vector
-loc.top <- xmlSApply(loc.ns, function(x) {
-    xmlSApply(x, function(y) xmlValue(y, recursive = F))
-    })[c(1:7)]
-loc.top.v <-as.vector(unlist(loc.top))
+loc.top.v <- as.vector(unlist(xmlSApply(loc.ns, xmlValue)))[c(1:6)]
 
 # Store child node attributues as a vector
 loc.children.v <- vector()
