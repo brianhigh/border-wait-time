@@ -22,6 +22,9 @@ dat <- readHTMLTable(url, trim=TRUE, header=FALSE, which=5,
 # Separate the concatenated fields
 dat <- gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", dat)
 
+# Remove extra text
+dat <- gsub(" lane\\(s\\) open| min delay", "", dat)
+
 # Add a timestamp
 dat <- c(format(Sys.time(), "%Y-%m-%d %H:%M:%S"), dat)
 
