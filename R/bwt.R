@@ -28,6 +28,11 @@ ports <- sapply(getNodeSet(xmltop, "/border_wait_time/port/port_name"),
 ns <- getNodeSet(xmltop, '/border_wait_time/port')
 loc.ns <- ns[[grep(loc, ports)]]
 
+# We can't just run xmlValue on the whole XML node, as the cells run together
+#loc.v <- as.vector(unlist(xmlSApply(loc.ns, xmlValue)))
+#loc.v[8]
+#[1] "25At 1:00 pm PSTdelay6010At 1:00 pm PSTdelay108At 1:00 pm PSTdelay407"
+
 # Store top-level node attributues as a vector
 loc.top <- xmlSApply(loc.ns, function(x) {
     xmlSApply(x, function(y) xmlValue(y, recursive = F))
