@@ -12,25 +12,18 @@ csv <- "data/sy2R.csv"
 # Create data folder
 dir.create(file.path('data'), showWarnings=FALSE, recursive=TRUE)
 
-# Output one line of data with a timestamp.
-timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-
 #install.packages("XML")
 library(XML)
 
-# Create a function to separate concatenated fields of node cells
-addSep <- function(node) {
-    gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", xmlValue(node))
-}
+# Parse HTML into dataframe. Select the 3rd row of values. Store as a vector.
+dat <- readHTMLTable(url, trim=TRUE, header=FALSE, which=5, 
+                       data.frame=TRUE, stringsAsFactors=FALSE)[3,]
 
-# Parse HTML table into dataframe. Use the 3rd row for data values.
-dat.l <- data.frame(readHTMLTable(url, trim=TRUE, header=FALSE, which=5))[3,]
+# Separate the concatenated fields
+dat <- gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", dat)
 
-# Separate concatenated fields
-dat.v <- gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", as.character(unlist(dat.l)))
+# Add a timestamp
+dat <- c(format(Sys.time(), "%Y-%m-%d %H:%M:%S"), dat)
 
-# Add timestamp
-dat.v <- c(timestamp, dat.v)
-
-# Append to CSV
-write(paste(dat.v, collapse=","), file=csv, append=TRUE)
+# Append to CSV. Note: Did not quote or escape. May not conform to RFC 4180.
+write(paste(dat, collapse=","), file=csv, append=TRUE)
