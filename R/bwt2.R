@@ -18,15 +18,19 @@ timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
 #install.packages("XML")
 library(XML)
 
-# Parse HTML table
-dat <- data.frame(readHTMLTable(url, skip.rows=5, trim=T, header=F, which=5), 
-                    stringsAsFactors=F)
+# Create a function to separate concatenated fields of node cells
+addSep <- function(node) {
+    gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", xmlValue(node))
+}
+
+# Parse HTML table into dataframe. Use the 3rd row for data values.
+dat.l <- data.frame(readHTMLTable(url, trim=TRUE, header=FALSE, which=5))[3,]
 
 # Separate concatenated fields
-dat <- apply(dat[3,], 2, function(x) gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", x))
+dat.v <- gsub("([A-Za-z])(no|[0-9])", "\\1,\\2", as.character(unlist(dat.l)))
 
 # Add timestamp
-dat <- c(timestamp, dat)
+dat.v <- c(timestamp, dat.v)
 
 # Append to CSV
-write(paste(dat, collapse=","), file=csv, append=TRUE)
+write(paste(dat.v, collapse=","), file=csv, append=TRUE)
