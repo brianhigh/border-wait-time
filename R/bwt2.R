@@ -1,9 +1,9 @@
 # bwt2.R: Extract border wait time data from HTML table using R.
 #
-# Tested on Ubuntu 14.04.3 LTS and R version 3.2.3 (2015-12-10).
+# Tested on Ubuntu 14.04.3 LTS and R version 3.2.3 (2016-06-06).
 #
 # Schedule to run once an hour, at half past the hour, e.g.:
-#     $ echo '30 * * * * ~/bin/bwt2.R' | crontab
+#     $ echo '30 * * * * Rscript ~/bin/bwt2.R' | crontab
 
 url <- "http://apps.cbp.gov/bwt/display_rss_port.asp?port=250401"
 loc <- "San Ysidro"
