@@ -11,6 +11,7 @@ dir.create(file.path(data_dir), showWarnings=FALSE, recursive=TRUE)
 # Define variables
 base_url <- 'https://bwt.cbp.gov/api/historicalwaittimes/'
 crossing_id <- '09250401'
+csv <- file.path(data_dir, "syR-hist.csv")
 
 # Get data and combine as a single dataframe
 df <- tibble(bwt_month = 1:12) %>% 
@@ -20,4 +21,5 @@ df <- tibble(bwt_month = 1:12) %>%
   rename("bwt_hour" = "time_slot") %>%
   mutate(across(everything(), as.numeric))
 
-write_csv(df, file.path(data_dir, "syR-hist.csv"))
+# Save results
+write_csv(df, csv)
