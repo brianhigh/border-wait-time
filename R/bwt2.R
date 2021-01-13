@@ -45,9 +45,8 @@ lane_types <- grep('_lanes$', names(ports_lst[[1]]), value = TRUE)
 lane_type <- rep(lane_types, each = length(ports_lst))
 lane_data <- map2(.x = rep(ports_lst, length(lane_types)),
                   .y = lane_type, 
-                  .f = ~data.frame(t(.x[[.y]]$standard_lanes), .y = .y)) %>%
-  bind_rows(.id = "port_number") %>% unnest(everything()) %>%
-  rename(lane_type = ".y")
+                  .f = ~data.frame(t(.x[[.y]]$standard_lanes), lane_type = .y)) %>%
+  bind_rows(.id = "port_number") %>% unnest(everything())
 
 # Combine variables into a single dataframe
 port_data <- inner_join(ports, lane_data, by = "port_number")

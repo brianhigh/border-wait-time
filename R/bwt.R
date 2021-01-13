@@ -34,7 +34,7 @@ lane_types <- grep('_lanes$', names(ports_lst[[1]]), value = TRUE)
 lane_type <- rep(lane_types, each = length(ports_lst))
 lane_data <- map2(.x = rep(ports_lst, length(lane_types)),
      .y = lane_type, 
-     .f = ~as_tibble(flatten(.x[[.y]]$standard_lanes), .y = .y)) %>%
+     .f = ~as_tibble(flatten(.x[[.y]]$standard_lanes))) %>%
   bind_rows(.id = "port_number") %>%
   mutate(lane_type = lane_type)
 
