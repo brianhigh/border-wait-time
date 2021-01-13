@@ -7,7 +7,7 @@
 
 # Load packages, installing as needed
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(xml2, jsonlite, dplyr, purrr, readr, tidyr)
+pacman::p_load(jsonlite, dplyr, purrr, readr, tidyr)
 
 # Create data folder
 data_dir <- 'data'
